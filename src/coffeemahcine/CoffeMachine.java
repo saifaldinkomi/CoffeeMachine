@@ -10,5 +10,23 @@ package coffeemahcine;
  * @author Saif
  */
 public class CoffeMachine {
+    WaterTank watertank;
+    WasteTray wastetray;
+    Grinder grinder;
+    Counter counter;
+
+    public CoffeMachine() {
+    }
+    
+
+    public CoffeMachine(WaterTank watertank, WasteTray wastetray, Grinder grinder, Counter counter) {
+        this.watertank = watertank;
+        this.wastetray = wastetray;
+        this.grinder = grinder;
+        this.counter = counter;
+    }
+    
+    
+    
     
 }
