@@ -14,17 +14,21 @@ public class CoffeMachine {
     WasteTray wastetray;
     Grinder grinder;
     Counter counter;
+    BeansContainer beans;
 
     public CoffeMachine() {
     }
-    
 
-    public CoffeMachine(WaterTank watertank, WasteTray wastetray, Grinder grinder, Counter counter) {
+    public CoffeMachine(WaterTank watertank, WasteTray wastetray, Grinder grinder, Counter counter, BeansContainer beans) {
         this.watertank = watertank;
         this.wastetray = wastetray;
         this.grinder = grinder;
         this.counter = counter;
+        this.beans = beans;
     }
+    
+
+    
     
     
     

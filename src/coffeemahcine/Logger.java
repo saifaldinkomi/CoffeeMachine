@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package coffeemahcine;
-
 /**
  *
  * @author MoMO
  */
 public interface Logger {
-    
+   public void log(String coffeeName , int waterTank, int beansafter) ;
+
 }
