@@ -1,0 +1,18 @@
+@startuml
+class coffeemahcine.BeansContainer
+class coffeemahcine.CoffeMachine
+class coffeemahcine.Counter
+class coffeemahcine.Grinder
+class coffeemahcine.NewMain
+class coffeemahcine.WasteTray
+class coffeemahcine.WaterTank
+class java.util.Scanner
+class java.util.logging.Logger
+class javax.swing.JOptionPane
+interface coffeemahcine.Logger
+coffeemahcine.BeansContainer ..> javax.swing.JOptionPane
+coffeemahcine.Counter ..> java.util.logging.Logger
+coffeemahcine.NewMain ..> java.util.Scanner
+coffeemahcine.WasteTray ..> javax.swing.JOptionPane
+coffeemahcine.WaterTank ..> javax.swing.JOptionPane
+@enduml

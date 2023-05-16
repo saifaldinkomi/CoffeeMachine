@@ -1,0 +1,10 @@
+@startuml
+class coffeemahcine.BeansContainer
+class coffeemahcine.CoffeMachine
+class coffeemahcine.Counter
+class coffeemahcine.Grinder
+class coffeemahcine.NewMain
+class coffeemahcine.WasteTray
+class coffeemahcine.WaterTank
+
+@enduml

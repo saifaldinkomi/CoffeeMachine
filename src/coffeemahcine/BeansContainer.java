@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author Saif
  */
-public class BeansContainer {
+public class BeansContainer  {
     private double capasity;
     private double level;
 
@@ -38,17 +38,24 @@ public class BeansContainer {
     public void setLevel(double level) {
         this.level = level;
     }
-    public void drain(double amount){
+    public void drain(double amount)throws OutOfBeansException{
             if(amount<=this.level)
                 this.level-=amount;
+            throw new OutOfBeansException();
+               
+            
     }
      public void fill(double amount){
         if(this.level<=this.capasity)
             if(amount<=this.capasity-this.level)
                  level+=amount;
-            else JOptionPane.showMessageDialog(null, "the bens conener is full");
+            else 
+               
+                JOptionPane.showMessageDialog(null, "the beans container is full");
     }
      public String getInfo(){
             return "capacuty: " + this.capasity + "level:" + this.level;
                     }
+
+    
 }
