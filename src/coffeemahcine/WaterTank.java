@@ -5,6 +5,7 @@
  */
 package coffeemahcine;
 
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,13 +13,15 @@ import javax.swing.JOptionPane;
  * @author Saif
  */
 public class WaterTank {
+    FileLogger Logger;
     private double capacity;
     private double level=0;
+    
 
-    public WaterTank() {
-    }
+   
 
     public WaterTank(double capacity, int level) {
+        
         this.capacity = capacity;
         this.level = level;
     }
@@ -40,17 +43,26 @@ public class WaterTank {
     }
     
     
-    public void fill(double water){
+    public void fill(double water) throws  FullWaterException{
         if(this.level<=this.capacity)
+        {
             if(water<=this.capacity-this.level)
-                 level+=water;
-            else JOptionPane.showMessageDialog(null, "the water amount larger then capacity");
+              {level+=water;
+               FileLogger.LogInfo("Filling Water Tank with :"+water+" ml of water");
+              }    
+        }
+             throw new FullWaterException();
     }
-     public void drein(double water){
+     public void Drain(double water) throws OutOfWaterException{
           if(this.level!=0)
-            if(water<=this.level)
-        level-=water;
-            else JOptionPane.showMessageDialog(null, "the water amount smaller then level");
+          { if(water<=this.level)
+            {level-=water;
+            FileLogger.LogInfo(water +" ml Of Water Has been poured");
+          return;
+            }
+          }  
+                throw new OutOfWaterException();
+                 
     }
      public double waterLevel(){
      return ((this.level/this.capacity)*100);

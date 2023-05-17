@@ -10,7 +10,7 @@ package coffeemahcine;
  * @author MoMO
  */
 public class Counter {
-    private int Counter;
+    private  int Counter;
 
     public Counter() {
         this.Counter = 0;
@@ -22,6 +22,10 @@ public class Counter {
 
     public void setCounter(int Counter) {
         this.Counter = Counter;
+    }
+    public void Count()
+    {
+        this.Counter++;
     }
     
     

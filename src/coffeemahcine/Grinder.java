@@ -11,7 +11,7 @@ package coffeemahcine;
  * @author Saif
  */
 public class Grinder {
-    private int level=0;
+    private int level;
 
     public Grinder() {
     }
@@ -26,9 +26,10 @@ public class Grinder {
 
     public void setLevel(int level) {
         this.level = level;
+        FileLogger.LogInfo("Grind Level Of"+level+" Is set");
     } 
     public void grind(double amount){
-        level=0;
+        FileLogger.LogInfo(amount+" Has been Grined");
     }
   public String getinfo(){
       return "level:"+this.level;
