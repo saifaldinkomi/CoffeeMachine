@@ -5,30 +5,29 @@
  */
 package coffeemahcine;
 
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Saif
  */
-public class BeansContainer  {
-    private double capasity;
-    private double level;
+public class BeansContainer   {
+    private double Capacity;
+    private double level=0;
 
     public BeansContainer() {
     }
 
     public BeansContainer(double capasity, double level) {
-        this.capasity = capasity;
+        this.Capacity = capasity;
         this.level = level;
     }
 
     public double getCapasity() {
-        return capasity;
+        return Capacity;
     }
 
     public void setCapasity(double capasity) {
-        this.capasity = capasity;
+        this.Capacity = capasity;
     }
 
     public double getLevel() {
@@ -40,21 +39,32 @@ public class BeansContainer  {
     }
     public void drain(double amount)throws OutOfBeansException{
             if(amount<=this.level)
-                this.level-=amount;
-            throw new OutOfBeansException();
+            {   this.level-=amount;
+            Logger1.LogInfo(amount+"Beans Has been Drained");
+            
+            }
+            else 
+                throw new OutOfBeansException();
                
             
     }
-     public void fill(double amount){
-        if(this.level<=this.capasity)
-            if(amount<=this.capasity-this.level)
-                 level+=amount;
-            else 
-               
-                JOptionPane.showMessageDialog(null, "the beans container is full");
+     public void fill(double amount) throws FullBeansException
+     {
+        if(this.level<=this.Capacity)
+        {if(amount<=this.Capacity-this.level)
+            { level+=amount;
+            Logger1.LogInfo("Filling Beans Container With "+amount+" beans");
+            }
+        else throw new FullBeansException();
+        }  
+       else throw new FullBeansException();
+                
     }
+     public double BeansLevel(){
+     return ((this.level/this.Capacity)*100);
+     }
      public String getInfo(){
-            return "capacuty: " + this.capasity + "level:" + this.level;
+            return "capacity: " + this.Capacity + " level:" + this.level;
                     }
 
     

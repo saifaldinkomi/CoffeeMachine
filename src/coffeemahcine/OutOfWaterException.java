@@ -13,12 +13,9 @@ import javax.swing.JOptionPane;
 public class OutOfWaterException extends Exception{
 
     public OutOfWaterException() {
-         JOptionPane.showMessageDialog(null,"The machine is out of water" ); 
+         
     }
-    public OutOfWaterException(String message)
-    {
-        super(message);
-    }
+    
         
     
 }

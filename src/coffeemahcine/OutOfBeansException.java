@@ -15,11 +15,9 @@ import javax.swing.JOptionPane;
 public class OutOfBeansException extends Exception {
 
     public OutOfBeansException() {
-    JOptionPane.showMessageDialog(null,"The machine is out of beans" ); 
+    
     }
-    public OutOfBeansException(String message){
-        super(message);
-    }
+   
     
     
     

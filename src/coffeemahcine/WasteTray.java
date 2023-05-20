@@ -40,7 +40,7 @@ public class WasteTray {
     }
     public void add(double amount){
         if(this.level<=this.capacity)
-            if(amount<=this.capacity-this.level)
+            
                  level+=amount;
             else JOptionPane.showMessageDialog(null, "Your Watse Tray Is Full");
     }

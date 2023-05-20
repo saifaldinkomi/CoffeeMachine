@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 public class FullBeansException extends Exception{
     public FullBeansException()
     {
-        JOptionPane.showMessageDialog(null,"The machine is Full of beans" ); 
     }
     
 }

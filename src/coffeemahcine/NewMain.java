@@ -42,12 +42,12 @@ public class NewMain {
                                      System.out.println("Would you like it \n 1- Single \n 2- Double");
                                         int schoice =scanner.nextInt();
                                         switch (schoice){
-                                           case 1: CoffeeMachine.watertank.drein(30);
+                                           case 1: CoffeeMachine.watertank.Drain(30);
                                           CoffeeMachine.grinder.setLevel(7);
                                           CoffeeMachine.grinder.grind(7);
                                          CoffeeMachine.wastetray.add(1);
                                          break;
-                                         case 2:CoffeeMachine.watertank.drein(60);
+                                         case 2:CoffeeMachine.watertank.Drain(60);
                                           CoffeeMachine.grinder.setLevel(14);
                                          CoffeeMachine.grinder.grind(14);
                                          CoffeeMachine.wastetray.add(1);
@@ -60,12 +60,12 @@ public class NewMain {
                                     System.out.println("Would you like it \n 1- Single \n 2- Double");
                                     int dchoice =scanner.nextInt();
                                     switch (dchoice){
-                                        case 1: CoffeeMachine.watertank.drein(170);
+                                        case 1: CoffeeMachine.watertank.Drain(170);
                                         CoffeeMachine.grinder.setLevel(7);
                                         CoffeeMachine.grinder.grind(7);
                                         CoffeeMachine.wastetray.add(1);
                                         break;
-                                        case 2:CoffeeMachine.watertank.drein(220);
+                                        case 2:CoffeeMachine.watertank.Drain(220);
                                         CoffeeMachine.grinder.setLevel(14);
                                         CoffeeMachine.grinder.grind(14);
                                         CoffeeMachine.wastetray.add(1);
