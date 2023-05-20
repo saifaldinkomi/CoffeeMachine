@@ -5,6 +5,8 @@
  */
 package coffeemahcine;
 
+import javax.swing.JOptionPane;
+
 
 
 /**
@@ -34,18 +36,25 @@ public class CoffeMachine {
         
     }
     public void MakeCoffe(double Water,Double Beans,int Grind,String Type,String mix) throws OutOfBeansException, OutOfWaterException
-    {if (Water>watertank.waterLevel())
-        
-        
+    {
+        if (Water<=watertank.getLevel())
+        { 
+        if(Beans<=beans.getLevel())
+        {
+            
         beans.drain(Beans);
         grinder.setLevel(Grind);
         grinder.grind(Beans);
         watertank.Drain(Water);
-        FileLogger.LogInfo("The Cup Of "+mix+" "+ Type+" Has Been Made\nPon Aptit");
+        Logger1.LogInfo("The Cup Of "+mix+" "+ Type+" Has Been Made\nPon Aptit");
         wastetray.add(1);
         Counter.Count();
-        
-    }
+        }else 
+         throw new OutOfBeansException();
+       
+        }else throw new OutOfWaterException();
+         
+    } 
     
 
     

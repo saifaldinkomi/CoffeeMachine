@@ -18,23 +18,23 @@ import java.util.logging.SimpleFormatter;
  * @author MoMO
  */
 
-public class FileLogger{
-    public static Logger logger;
+public class Logger1{
+   public static Logger logger;
    String filename="Log.txt";
-        File f =new File(filename);
-   public FileLogger() throws IOException
-    {
-        
-    
+   File f =new File(filename);
+   
+   public Logger1() throws IOException
+   {
         if (!f.exists( ))
         {
             f.createNewFile();
         }
         FileHandler fh = new FileHandler(filename,true);
-        logger = Logger.getLogger("tset");
+        logger = Logger.getLogger("FileLogger");
         logger.addHandler(fh);
         SimpleFormatter formatter=new SimpleFormatter();
         fh.setFormatter(formatter);
+        
         
     }
 
@@ -45,6 +45,7 @@ public class FileLogger{
     public static void LogInfo(String Msg)
    {
        logger.info(Msg);
+       
    }
     public static void LogWarning(String Msg){
         logger.warning(Msg);

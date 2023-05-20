@@ -9,7 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 /**
  *
  * @author Saif
@@ -22,12 +28,17 @@ public class cofee extends javax.swing.JFrame {
      */
         
         CoffeMachine CF;
-        FileLogger Logger;
+        
+        Logger1 Logger;
+        
+        
+            
         
     public cofee() throws IOException {
-        this.CF = new CoffeMachine(new WaterTank(500, 0), new WasteTray(30,0), new Grinder(),new BeansContainer(200, 0));
+        this.CF = new CoffeMachine(new WaterTank(2000, 0), new WasteTray(30,0), new Grinder(),new BeansContainer(200, 0));
              
-        FileLogger.logger.setLevel(Level.ALL);
+        Logger.logger.setLevel(Level.ALL);
+       
        
         
         initComponents();
@@ -97,6 +108,9 @@ public class cofee extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         WasteLabel = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        ImportButton = new javax.swing.JButton();
+        ExportButton = new javax.swing.JButton();
 
         jButton2.setText("refill watrer");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -538,6 +552,43 @@ public class cofee extends javax.swing.JFrame {
 
         jTabbedPane3.addTab("coffee", jPanel3);
 
+        ImportButton.setText("Import Data From File");
+        ImportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportButtonActionPerformed(evt);
+            }
+        });
+
+        ExportButton.setText("Export Data From File");
+        ExportButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExportButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(240, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ExportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ImportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(235, 235, 235))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(ExportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addComponent(ImportButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109))
+        );
+
+        jTabbedPane3.addTab("File", jPanel9);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -565,104 +616,157 @@ public class cofee extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void doubleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doubleRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_doubleRadioButtonActionPerformed
-
     private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton10ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        CF.wastetray.cleen();
+        DisplayWaste();
+        Logger.LogInfo("Cleaning The Tray");
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        double wt;
+        wt=Double.parseDouble(JOptionPane.showInputDialog("Please Enter The Water Amount You Want to add"));
+
+        try {
+            CF.watertank.fill(wt);
+        } catch (FullWaterException ex) {
+            Logger1.LogWarning("Cant Add That amount of Water to Machine");
+            JOptionPane.showMessageDialog(null, "Full Of Water Cant Add More");
+        }
+
+        DisplayWater();
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        double bs=Double.parseDouble(JOptionPane.showInputDialog("Please Enter The Beans Amount You Want to add"));
+        try {
+            CF.beans.fill(bs);
+        } catch (FullBeansException ex) {
+            Logger1.LogWarning("Cant Add That amount of coffee to Machine");
+            JOptionPane.showMessageDialog(null, "FullOfBeans Cant Add More");
+        }
+        DisplayBeans();
+        Logger.LogInfo("Filling Beans Container With "+bs+" beans");
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     private void makeCoffeButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeCoffeButton6ActionPerformed
         // TODO add your handling code here:
         int Grind=Integer.parseInt(GrindField.getText());
+        if (CF.wastetray.getLevel()<20)
+        {
         if (americnoRadioButton.isSelected())
         {
             if(singleRadioButton.isSelected())
-                try {
-                    CF.MakeCoffe(170, 7.0, Grind,"Americano", "Single");
-                    Display();
+            try {
+                CF.MakeCoffe(170, 7.0, Grind,"Americano", "Single");
+                Display();
             } catch (OutOfBeansException ex) {
-                FileLogger.LogWarning("Out Of beans Exception");
+                Logger.LogWarning("Out Of beans Exception");
+                JOptionPane.showMessageDialog(null, "No Enough Beans to make coffee");
             } catch (OutOfWaterException ex) {
-                FileLogger.LogWarning("Out Of water Exception");
+                
+                Logger.LogWarning("Out Of water Exception");
+                JOptionPane.showMessageDialog(null, "No Enough Water");
             }
             if (doubleRadioButton.isSelected())
             {
                 try {
                     CF.MakeCoffe(240, 14.0, Grind,"Americano", "Double");
                     Display();
-            } catch (OutOfBeansException ex) {
-                FileLogger.LogWarning("Out Of beans Exception");
-            } catch (OutOfWaterException ex) {
-                FileLogger.LogWarning("Out Of water Exception");
+                } catch (OutOfBeansException ex) {
+                    Logger.LogWarning("Out Of beans Exception");
+                    JOptionPane.showMessageDialog(null, "No Enough Beans to make coffee");
+                } catch (OutOfWaterException ex) {
+                    Logger.LogWarning("Out Of water Exception");
+                    JOptionPane.showMessageDialog(null, "No Enough Water");
+                }
+
             }
-            
-        }
             else if(esspresoRadioButton.isSelected())
             {
                 if(singleRadioButton.isSelected())
                 {
                     try {
-                    CF.MakeCoffe(30, 7.0, Grind,"Esspreco", "Single");
-                    Display();
-            } catch (OutOfBeansException ex) {
-                FileLogger.LogWarning("Out Of beans Exception");
-            } catch (OutOfWaterException ex) {
-                FileLogger.LogWarning("Out Of water Exception");
-            }
+                        CF.MakeCoffe(30, 7.0, Grind,"Esspreco", "Single");
+                        Display();
+                    } catch (OutOfBeansException ex) {
+                        Logger.LogWarning("Out Of beans Exception");
+                        JOptionPane.showMessageDialog(null, "No Enough Beans to make coffee");
+
+                    } catch (OutOfWaterException ex) {
+                        Logger.LogWarning("Out Of water Exception");
+                        JOptionPane.showMessageDialog(null, "No Enough Water");
+                    }
                 }
                 if (doubleRadioButton.isSelected())
                 {
                     try {
-                    CF.MakeCoffe(60, 14.0, Grind,"Americano", "Single");
-                    Display();
-            } catch (OutOfBeansException ex) {
-                FileLogger.LogWarning("Out Of beans Exception");
-            } catch (OutOfWaterException ex) {
-                FileLogger.LogWarning("Out Of water Exception");
-            }
+                        CF.MakeCoffe(60, 14.0, Grind,"Americano", "Single");
+                        Display();
+                    } catch (OutOfBeansException ex) {
+                        Logger.LogWarning("Out Of beans Exception");
+                        JOptionPane.showMessageDialog(null, "No Enough Beans to make coffee");
+
+                    } catch (OutOfWaterException ex) {
+                        Logger.LogWarning("Out Of water Exception");
+                        JOptionPane.showMessageDialog(null, "No Enough Water");
+                    }
                 }
             }
-        }   
+        }
+        }else JOptionPane.showMessageDialog(null,"The WateTray Is Full");
     }//GEN-LAST:event_makeCoffeButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void doubleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doubleRadioButtonActionPerformed
         // TODO add your handling code here:
-       double wt;
-        wt=Double.parseDouble(JOptionPane.showInputDialog("Please Enter The Water Amount You Want to add"));
+    }//GEN-LAST:event_doubleRadioButtonActionPerformed
 
+    private void ImportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportButtonActionPerformed
             try {
-                CF.watertank.fill(wt);
-            } catch (FullWaterException ex) {
-              }
-               
-            
-               
-            
-        DisplayWater();
-        
-        
-    }//GEN-LAST:event_jButton7ActionPerformed
+                
+               FileInputStream fi = new FileInputStream("object.txt");
+                ObjectInputStream oi = new ObjectInputStream(fi);
+                CoffeMachine CF = (CoffeMachine) oi.readObject();
+                oi.close();
+            } catch (FileNotFoundException ex) {
+               Logger.LogWarning("The File Coudnlt Be Found");
+                JOptionPane.showMessageDialog(null, "The File Coudnlt Be Found");
+            } catch (IOException ex) {
+                
+                
+            } catch (ClassNotFoundException ex) {
+                
+            }
+            Logger.LogInfo("The Object Has been Imported from file");
+            JOptionPane.showMessageDialog(null,"The Object Has been read.");
+            Display();
+    }//GEN-LAST:event_ImportButtonActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        double bs=Double.parseDouble(JOptionPane.showInputDialog("Please Enter The Beans Amount You Want to add"));
-             try {
-                 CF.beans.fill(bs);
-             } catch (FullBeansException ex) {
-                 Logger.logger.log(Level.WARNING, "Full Of Beans Exception", bs);
-             }
-        DisplayBeans();
-        FileLogger.LogInfo("Filling Beans Container With "+bs+" beans");
-       
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        CF.wastetray.cleen();
-        DisplayWaste();
-        Logger.logger.info("Cleaning The Tray");
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void ExportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportButtonActionPerformed
+            try {
+                
+                FileOutputStream f = new FileOutputStream("Object.txt");
+                ObjectOutputStream o = new ObjectOutputStream(f);
+                o.writeObject(CF);
+                 o.close();
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null,"Couldn't Find File");
+                Logger.LogWarning("The File Couldnt be found");
+            } catch (IOException ex) {
+                
+            }
+                
+            
+           Logger.LogInfo("The Object Has been Written To File");
+           JOptionPane.showMessageDialog(null,"The Object Has been Exported to file.");
+    }//GEN-LAST:event_ExportButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -699,10 +803,14 @@ public class cofee extends javax.swing.JFrame {
                     new cofee().setVisible(true);
                 } catch (IOException ex) {
                 }
+                 
             }
-        });
-            FileLogger FileLogger = new FileLogger();
+        }
+        );
+            Logger1 FileLogger = new Logger1();
+            
     }
+    
 void DisplayWater(){
     WaterTankLabel.setText(String.valueOf( CF.watertank.waterLevel())+"%");
 }
@@ -725,7 +833,9 @@ void Display()
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BeansLabel;
     private javax.swing.JTextArea DescribtionTextArea2;
+    private javax.swing.JButton ExportButton;
     private javax.swing.JTextField GrindField;
+    private javax.swing.JButton ImportButton;
     private javax.swing.JTextField WasteLabel;
     private javax.swing.JLabel WaterTankLabel;
     private javax.swing.JRadioButton americnoRadioButton;
@@ -764,6 +874,7 @@ void Display()
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton10;
     private javax.swing.JRadioButton jRadioButton2;

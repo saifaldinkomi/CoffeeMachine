@@ -5,7 +5,6 @@
  */
 package coffeemahcine;
 
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,10 +40,10 @@ public class BeansContainer   {
     public void drain(double amount)throws OutOfBeansException{
             if(amount<=this.level)
             {   this.level-=amount;
-            FileLogger.LogInfo(amount+" Has been Drained");
+            Logger1.LogInfo(amount+"Beans Has been Drained");
             
             }
-            else if (this.level<amount)
+            else 
                 throw new OutOfBeansException();
                
             
@@ -54,15 +53,18 @@ public class BeansContainer   {
         if(this.level<=this.Capacity)
         {if(amount<=this.Capacity-this.level)
             { level+=amount;
+            Logger1.LogInfo("Filling Beans Container With "+amount+" beans");
             }
-        }  throw new FullBeansException();
+        else throw new FullBeansException();
+        }  
+       else throw new FullBeansException();
                 
     }
      public double BeansLevel(){
      return ((this.level/this.Capacity)*100);
      }
      public String getInfo(){
-            return "capacuty: " + this.Capacity + "level:" + this.level;
+            return "capacity: " + this.Capacity + " level:" + this.level;
                     }
 
     

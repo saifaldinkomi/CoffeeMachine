@@ -26,10 +26,10 @@ public class Grinder {
 
     public void setLevel(int level) {
         this.level = level;
-        FileLogger.LogInfo("Grind Level Of"+level+" Is set");
+        Logger1.LogInfo("Grind Level Of"+level+" Is set");
     } 
     public void grind(double amount){
-        FileLogger.LogInfo(amount+" Has been Grined");
+        Logger1.LogInfo(amount+" Has been Grined");
     }
   public String getinfo(){
       return "level:"+this.level;

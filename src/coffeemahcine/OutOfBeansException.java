@@ -15,8 +15,7 @@ import javax.swing.JOptionPane;
 public class OutOfBeansException extends Exception {
 
     public OutOfBeansException() {
-    JOptionPane.showMessageDialog(null,"The machine is out of beans" ); 
-    FileLogger.logger.warning("Out of Water Exception");
+    
     }
    
     

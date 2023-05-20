@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Saif
  */
 public class WaterTank {
-    FileLogger Logger;
+    
     private double capacity;
     private double level=0;
     
@@ -48,20 +48,20 @@ public class WaterTank {
         {
             if(water<=this.capacity-this.level)
               {level+=water;
-               FileLogger.LogInfo("Filling Water Tank with :"+water+" ml of water");
+               Logger1.LogInfo("Filling Water Tank with :"+water+" ml of water");
               }    
+        else throw new FullWaterException();
         }
-             throw new FullWaterException();
+        else throw new FullWaterException();
     }
      public void Drain(double water) throws OutOfWaterException{
-          if(this.level!=0)
-          { if(water<=this.level)
-            {level-=water;
-            FileLogger.LogInfo(water +" ml Of Water Has been poured");
-          return;
+         
+           if(level!=0 && water<=this.level )
+            {
+            level-=water;
+            Logger1.LogInfo(water +" ml Of Water Has been poured");
             }
-          }  
-                throw new OutOfWaterException();
+           else throw new OutOfWaterException();
                  
     }
      public double waterLevel(){

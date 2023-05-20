@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 public class FullWaterException extends Exception {
     public FullWaterException()
     {
-         JOptionPane.showMessageDialog(null,"The Water tank is full" ); 
     }
     
 }
